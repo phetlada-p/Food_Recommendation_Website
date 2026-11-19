@@ -38,7 +38,7 @@
 //          ฟิลด์ที่ dataset ไม่มี ให้ส่ง [] / null / "" ได้เลย (หน้าเว็บรองรับ)
 
 const API_MODE = "auto";
-const API_BASE = "http://127.0.0.1:5000";
+const API_BASE = "http://127.0.0.1:5001";
 const API_TIMEOUT_MS = 5000;
 const TOP_N = 30;   // จำนวนเมนูสูงสุดที่ขอจากระบบ
 
@@ -183,6 +183,35 @@ function recipeTime(r) {
 }
 
 
+// วัตถุดิบที่นับเป็น "เนื้อสัตว์" สำหรับสูตรที่ระบุส่วนผสมแบบกว้าง ๆ
+// เช่น สูตรระบุ meat แต่ผู้ใช้เลือก pork / ground pork
+const MEAT_INGREDIENTS = new Set([
+    "pork", "ground pork", "pork belly", "pork leg", "pork offal",
+    "pork spine", "pork skin", "pork blood",
+    "chicken", "chicken feet", "beef", "duck", "meat"
+]);
+
+function ingredientMatches(recipeIngredient, userSet) {
+    if (userSet.has(recipeIngredient)) return true;
+
+    // สูตรที่ระบุ "meat" ยอมรับชนิดเนื้อสัตว์ที่ผู้ใช้เลือก
+    return recipeIngredient === "meat" &&
+        Array.from(userSet).some(function (item) {
+            return MEAT_INGREDIENTS.has(item);
+        });
+}
+
+function expandQueryIngredients(userSet) {
+    const expanded = new Set(userSet);
+    if (Array.from(userSet).some(function (item) {
+        return MEAT_INGREDIENTS.has(item) && item !== "meat";
+    })) {
+        expanded.add("meat");
+    }
+    return expanded;
+}
+
+
 function mockRecommend(thaiList, topN) {
     // 1. แปลงไทย -> อังกฤษ ด้วย ingredient_mapping_147.csv
     const userSet = new Set();
@@ -205,8 +234,11 @@ function mockRecommend(thaiList, topN) {
 
     // 2. เวกเตอร์ TF-IDF ของผู้ใช้ (เฉพาะวัตถุดิบที่โมเดลรู้จัก)
     const tfidf = getTfidf();
+    // เพิ่ม feature กลาง "meat" ในเวกเตอร์ค้นหาเมื่อผู้ใช้มีเนื้อสัตว์ชนิดใดชนิดหนึ่ง
+    // เพื่อให้ TF-IDF จับคู่กับสูตรที่ใช้คำรวมว่า meat ได้ด้วย
+    const queryFeatures = expandQueryIngredients(userSet);
     let queryNormSq = 0;
-    userSet.forEach(function (e) {
+    queryFeatures.forEach(function (e) {
         if (tfidf.idf[e] !== undefined) {
             queryNormSq += tfidf.idf[e] * tfidf.idf[e];
         }
@@ -215,6 +247,12 @@ function mockRecommend(thaiList, topN) {
 
     // 3. คะแนนของแต่ละเมนู
     const results = [];
+    // เก็บชื่อไทยที่ผู้ใช้เลือกแยกตามชื่ออังกฤษ เพื่อให้สูตรที่ใช้คำกว้าง ๆ
+    // เช่น "meat" แสดงชื่อวัตถุดิบจริงที่ผู้ใช้เลือก (เช่น "เนื้อหมู")
+    const selectedMeatLabels = thaiList.filter(function (name) {
+        const en = INGREDIENT_MAP[String(name).trim()];
+        return en && MEAT_INGREDIENTS.has(en) && en !== "meat";
+    });
 
     RECIPE_DATA.forEach(function (r, index) {
         const matched = [];
@@ -222,11 +260,20 @@ function mockRecommend(thaiList, topN) {
         let dot = 0;
 
         r.ing.forEach(function (e, i) {
-            if (userSet.has(e)) {
-                matched.push(r.ingTh[i]);
-                dot += tfidf.idf[e] * tfidf.idf[e];
+            if (ingredientMatches(e, userSet)) {
+                // แทนคำกลาง "เนื้อสัตว์" ด้วยชื่อเนื้อสัตว์ที่ผู้ใช้เลือกจริง
+                // นับเป็น 1 วัตถุดิบตามจำนวนช่องในสูตร ไม่เพิ่มคะแนนซ้ำ
+                if (e === "meat" && selectedMeatLabels.length > 0) {
+                    matched.push(selectedMeatLabels.join(" / "));
+                } else {
+                    matched.push(r.ingTh[i]);
+                }
             } else {
                 missing.push(r.ingTh[i]);
+            }
+
+            if (queryFeatures.has(e)) {
+                dot += tfidf.idf[e] * tfidf.idf[e];
             }
         });
 
@@ -256,15 +303,18 @@ function mockRecommend(thaiList, topN) {
         });
     });
 
-    // 4. จัดอันดับ: ทำได้ทันที -> coverage มาก -> similarity มาก (เท่ากันให้คงลำดับเดิมใน dataset)
+    // 4. จัดอันดับให้ตรงกับวัตถุดิบมากที่สุด:
+    //    coverage สูง -> จำนวนวัตถุดิบที่ตรงมาก -> cosine สูง -> เมนูทำได้ทันที
+    //    ไม่ดันเมนูที่ตรงเพียงเล็กน้อยขึ้นหน้าเพียงเพราะมี missing น้อย
     const round = function (x) { return Math.round(x * 1e9); };
 
     results.sort(function (a, b) {
+        if (round(a.coverage) !== round(b.coverage)) { return b.coverage - a.coverage; }
+        if (a.matched.length !== b.matched.length) { return b.matched.length - a.matched.length; }
+        if (round(a.similarity) !== round(b.similarity)) { return b.similarity - a.similarity; }
         const pa = a.status === "ทำได้ทันที" ? 0 : 1;
         const pb = b.status === "ทำได้ทันที" ? 0 : 1;
         if (pa !== pb) { return pa - pb; }
-        if (round(a.coverage) !== round(b.coverage)) { return b.coverage - a.coverage; }
-        if (round(a.similarity) !== round(b.similarity)) { return b.similarity - a.similarity; }
         return a._index - b._index;
     });
 

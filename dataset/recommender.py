@@ -34,6 +34,33 @@ READY = "ทำได้ทันที"
 NEED_MORE = "ต้องซื้อเพิ่ม"
 
 
+# ชนิดวัตถุดิบที่ถือว่าเป็นเนื้อสัตว์ เมื่อสูตรใช้คำรวมว่า "meat"
+MEAT_INGREDIENTS = {
+    "pork", "ground pork", "pork belly", "pork leg", "pork offal",
+    "pork spine", "pork skin", "pork blood",
+    "chicken", "chicken feet", "beef", "duck", "meat",
+}
+
+
+def ingredient_matches(recipe_ingredient, user_set):
+    """ตรวจว่าวัตถุดิบที่ผู้ใช้มีตรงกับวัตถุดิบในสูตรหรือไม่"""
+    if recipe_ingredient in user_set:
+        return True
+    return (
+        recipe_ingredient == "meat"
+        and any(item in MEAT_INGREDIENTS for item in user_set)
+    )
+
+
+def expand_query_ingredients(user_ingredients):
+    """เพิ่ม feature กลาง meat เมื่อผู้ใช้เลือกเนื้อสัตว์ชนิดใดชนิดหนึ่ง"""
+    expanded = set(user_ingredients)
+    if any(item in MEAT_INGREDIENTS and item != "meat"
+           for item in user_ingredients):
+        expanded.add("meat")
+    return expanded
+
+
 def identity(tokens):
     """analyzer ของ TfidfVectorizer: แต่ละเมนูมีรายการวัตถุดิบเป็นโทเค็นอยู่แล้ว
     (ต้องอยู่ระดับโมดูล เพื่อให้ joblib บันทึก/โหลดโมเดลได้)"""
@@ -89,7 +116,8 @@ class FoodRecommender:
         import numpy as np
         from sklearn.metrics.pairwise import cosine_similarity
 
-        known = [e for e in ingredients_en if e in self.vocab]
+        query_features = expand_query_ingredients(set(ingredients_en))
+        known = [e for e in query_features if e in self.vocab]
         if not known:
             return np.zeros(len(self.recipes))
         query = self.vectorizer.transform([known])
@@ -107,12 +135,28 @@ class FoodRecommender:
             return []
 
         user_set = set(user_en)
+        # ชื่อไทยที่ผู้ใช้เลือกจริง ใช้แทนคำกลาง "เนื้อสัตว์" ในผล matched
+        selected_meat_labels = [
+            str(name).strip() for name in ingredients_th
+            if self.th2en.get(str(name).strip()) in MEAT_INGREDIENTS
+            and self.th2en.get(str(name).strip()) != "meat"
+        ]
         sims = self.similarity(user_en)
         results = []
 
         for i, r in enumerate(self.recipes):
-            matched = [r["ingTh"][k] for k, e in enumerate(r["ing"]) if e in user_set]
-            missing = [r["ingTh"][k] for k, e in enumerate(r["ing"]) if e not in user_set]
+            matched = []
+            for k, e in enumerate(r["ing"]):
+                if ingredient_matches(e, user_set):
+                    if e == "meat" and selected_meat_labels:
+                        # ช่องเนื้อสัตว์ในสูตรนับเป็น 1 ช่อง แต่แสดงชื่อที่ผู้ใช้เลือก
+                        matched.append(" / ".join(selected_meat_labels))
+                    else:
+                        matched.append(r["ingTh"][k])
+            missing = [
+                r["ingTh"][k] for k, e in enumerate(r["ing"])
+                if not ingredient_matches(e, user_set)
+            ]
             if not matched:
                 continue
 
@@ -134,11 +178,13 @@ class FoodRecommender:
                 "_index": i,
             })
 
-        # ทำได้ทันที -> coverage มาก -> similarity มาก (เท่ากันคงลำดับเดิมใน dataset)
+        # จัดอันดับตามความตรงของวัตถุดิบ:
+        # coverage สูง -> จำนวนวัตถุดิบที่ตรงมาก -> cosine สูง -> ทำได้ทันที
         results.sort(key=lambda x: (
-            0 if x["status"] == READY else 1,
             -round(x["coverage"], 9),
+            -len(x["matched"]),
             -round(x["similarity"], 9),
+            0 if x["status"] == READY else 1,
             x["_index"],
         ))
         for x in results:
