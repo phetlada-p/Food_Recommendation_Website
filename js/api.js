@@ -38,7 +38,7 @@
 //          ฟิลด์ที่ dataset ไม่มี ให้ส่ง [] / null / "" ได้เลย (หน้าเว็บรองรับ)
 
 const API_MODE = "auto";
-const API_BASE = "http://127.0.0.1:5001";
+const API_BASE = "";
 const API_TIMEOUT_MS = 5000;
 const TOP_N = 30;   // จำนวนเมนูสูงสุดที่ขอจากระบบ
 

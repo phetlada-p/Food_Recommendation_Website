@@ -1,5 +1,5 @@
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from pathlib import Path
 import sys
@@ -57,11 +57,33 @@ def get_db_connection():
 
 @app.route("/", methods=["GET"])
 def home():
-    return jsonify({
-        "status": "success",
-        "message": "Smart Fridge Backend is running!"
-    }), 200
+    return send_from_directory(BASE_DIR, "index.html")
 
+
+@app.route("/<path:filename>", methods=["GET"])
+def frontend_files(filename):
+
+    allowed_html = {
+        "index.html",
+        "ingredients.html",
+        "recommendations.html",
+        "recipe-detail.html"
+    }
+
+    allowed_folders = {
+        "css",
+        "js",
+        "images"
+    }
+
+    first_folder = filename.split("/")[0]
+
+    if filename in allowed_html or first_folder in allowed_folders:
+        return send_from_directory(BASE_DIR, filename)
+
+    return jsonify({
+        "error": "File not found"
+    }), 404
 
 # ========================================
 # 5. ตรวจสอบสถานะ AI Model
@@ -368,12 +390,13 @@ def not_found(error):
 
 if __name__ == "__main__":
 
+    import os
+
     print("Starting Smart Fridge Backend...")
-    print("API URL: http://127.0.0.1:5001")
     print(f"SQLite Database: {DATABASE_PATH}")
 
     app.run(
-        host="127.0.0.1",
-        port=5001,
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 5001)),
         debug=False
     )
