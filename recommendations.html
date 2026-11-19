@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เมนูแนะนำ | What's in Your Fridge?</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>🍅 What's in Your Fridge?</h1>
+
+        <nav>
+            <a href="index.html">หน้าแรก</a>
+            <a href="ingredients.html">เลือกวัตถุดิบ</a>
+        </nav>
+    </header>
+
+    <main class="result-page">
+
+        <!-- Page Introduction -->
+        <section class="ingredients-intro">
+            <p class="subtitle">🤖 AI RECOMMENDATION</p>
+            <h2>เมนูที่เหมาะกับวัตถุดิบของคุณ 🍽️</h2>
+            <p>AI จัดอันดับเมนูอาหารไทยที่ใกล้เคียงกับวัตถุดิบที่คุณเลือกมากที่สุด</p>
+        </section>
+
+        <!-- Selected Ingredients Summary -->
+        <section class="result-summary">
+            <div class="result-summary-text">
+                <strong>🧺 วัตถุดิบของคุณ</strong>
+                <div id="summaryChips" class="chip-row"></div>
+            </div>
+            <a href="ingredients.html" class="edit-link">✏️ แก้ไขวัตถุดิบ</a>
+        </section>
+
+        <!-- Toolbar -->
+        <section class="result-toolbar" id="toolbar" hidden>
+            <p id="resultCount"></p>
+
+            <div class="toolbar-controls">
+                <label class="sort-box">
+                    ประเภท
+                    <select id="courseSelect">
+                        <option value="all">ทุกประเภท</option>
+                        <option value="main dish">อาหารจานหลัก</option>
+                        <option value="snack">ของว่าง</option>
+                        <option value="dessert">ของหวาน</option>
+                        <option value="other">ยำ/ซุป</option>
+                    </select>
+                </label>
+
+                <label class="sort-box">
+                    แสดง
+                    <select id="statusSelect">
+                        <option value="all">ทั้งหมด</option>
+                        <option value="ready">ทำได้ทันที</option>
+                        <option value="fav">เมนูโปรด ❤️</option>
+                    </select>
+                </label>
+
+                <label class="sort-box">
+                    เรียงตาม
+                    <select id="sortSelect">
+                        <option value="rank">ความตรงมากที่สุด</option>
+                        <option value="name">ชื่อ ก-ฮ</option>
+                    </select>
+                </label>
+            </div>
+        </section>
+
+        <!-- Results / Loading / Empty / Error -->
+        <p id="sourceNote" class="source-note-bar" hidden></p>
+
+        <section id="resultArea" aria-live="polite"></section>
+
+        <div class="load-more-box">
+            <button id="loadMoreBtn" class="clear-btn" type="button" hidden>แสดงเมนูเพิ่ม ↓</button>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>❤️ What's in Your Fridge? | AI Food Recommendation</p>
+    </footer>
+
+    <script src="js/recipes-data.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/recommendations.js"></script>
+
+</body>
+</html>

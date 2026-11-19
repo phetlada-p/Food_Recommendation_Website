@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>เลือกวัตถุดิบ | What's in Your Fridge?</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- เชื่อมต่อ css -->
+        <!-- ฟอนต์ไทย -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>🥬 What's in Your Fridge?</h1>
+
+        <nav>
+            <a href="index.html">หน้าแรก</a>
+            <a href="ingredients.html" class="active">เลือกวัตถุดิบ</a>
+        </nav>
+    </header>
+
+
+    <!-- Main Content -->
+    <main class="ingredients-page">
+
+        <!-- Page Introduction -->
+        <section class="ingredients-intro">
+
+            <p class="subtitle">❤️ LET'S FIND YOUR FOOD</p>
+
+            <h2>เลือกวัตถุดิบของคุณ 🥕</h2>
+
+            <p>
+                เลือกวัตถุดิบที่คุณมีอยู่ในตู้เย็น
+                เพื่อให้ AI ช่วยแนะนำเมนูอาหารไทยจากฐานข้อมูล 225 เมนู
+            </p>
+
+        </section>
+
+
+        <!-- Search -->
+        <section class="ingredient-search">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="🔍 ค้นหาวัตถุดิบ เช่น มะเขือเทศ ไข่ไก่..."
+            >
+
+        </section>
+
+
+        <!-- Category -->
+        <section class="ingredient-category">
+
+            <h3>เลือกหมวดหมู่วัตถุดิบ</h3>
+
+            <div class="category-buttons" id="categoryButtons">
+                <!-- ปุ่มหมวดหมู่ถูกสร้างจาก js/ingredients-data.js -->
+            </div>
+
+        </section>
+
+
+        <!-- Ingredient List -->
+        <section class="ingredient-list">
+
+            <h3>🥗 วัตถุดิบทั้งหมด</h3>
+
+            <div class="ingredient-grid" id="ingredientGrid">
+                <!-- การ์ดวัตถุดิบถูกสร้างจาก js/ingredients-data.js -->
+            </div>
+
+            <p id="noResult" style="display: none;">
+                ไม่พบวัตถุดิบที่ค้นหา 🥺
+            </p>
+
+        </section>
+
+        <!-- Selected Ingredients -->
+        <section class="selected-section">
+
+            <h3>🧺 วัตถุดิบที่คุณเลือก</h3>
+
+            <p>
+                คุณเลือกวัตถุดิบแล้ว
+                <span id="selectedCount">0</span> รายการ
+            </p>
+
+            <div id="selectedList">
+                ยังไม่มีวัตถุดิบที่เลือก
+            </div>
+
+            <!-- ปุ่มจัดการรายการ -->
+            <div class="selected-actions">
+
+                <button id="clearBtn" class="clear-btn" disabled>
+                    🗑️ ล้างรายการทั้งหมด
+                </button>
+
+                <button id="confirmBtn" class="btn" disabled>
+                    ✨ ยืนยันและค้นหาเมนู
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+        <p>❤️ What's in Your Fridge? | AI Food Recommendation</p>
+    </footer>
+
+    <!-- แถบสรุปติดขอบล่าง -->
+    <div class="sticky-bar" id="stickyBar" hidden>
+        <span>🧺 เลือกแล้ว <b id="stickyCount">0</b> รายการ</span>
+        <button id="stickyConfirm" class="btn" type="button">ค้นหาเมนู →</button>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/ingredients-data.js"></script>
+    <script src="js/ingredients.js"></script>
+
+</body>
+</html>

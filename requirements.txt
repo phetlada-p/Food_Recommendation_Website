@@ -1,0 +1,9 @@
+# โมเดลและ notebook (สมาชิกคนที่ 2)
+scikit-learn
+joblib
+pandas
+
+# Flask API (สมาชิกคนที่ 3)
+flask
+flask-cors
+gunicorn

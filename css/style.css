@@ -1,0 +1,1838 @@
+
+/* ============================= */
+/* Color Theme */
+/* ============================= */
+
+:root {
+    --primary-color: #E53935;
+    --dark-red: #C62828;
+    --light-red: #FFEBEE;
+    --white: #FFFFFF;
+    --text-color: #333333;
+    --gray-color: #F5F5F5;
+}
+
+/* ============================= */
+/* Basic Settings */
+/* ============================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--white);
+    color: var(--text-color);
+}
+
+/* ============================= */
+/* Header */
+/* ============================= */
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 60px;
+    background-color: var(--white);
+
+    /* เพิ่มความสวยงาม */
+    border-bottom: 1px solid #FFE0E0;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+
+    position: relative;
+    z-index: 10;
+}
+
+header h1 {
+    color: var(--primary-color);
+    font-size: 25px;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text-color);
+    margin-left: 25px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: var(--primary-color);
+}
+
+/* ============================= */
+/* Hero Section */
+/* ============================= */
+
+.hero {
+    position: relative;
+    text-align: center;
+    padding: 120px 20px;
+    background-color: var(--light-red);
+    overflow: hidden;
+}
+
+.hero-content {
+    max-width: 750px;
+    margin: auto;
+    position: relative;
+    z-index: 2;
+}
+
+.subtitle {
+    color: var(--primary-color);
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.hero h2 {
+    font-size: 42px;
+    line-height: 1.5;
+    color: var(--dark-red);
+    margin-bottom: 20px;
+}
+
+.description {
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+/* ============================= */
+/* Food Decorations */
+/* ============================= */
+
+.food-decoration {
+    position: absolute;
+    font-size: 55px;
+    opacity: 0.8;
+}
+
+.food-1 {
+    top: 12%;
+    left: 12%;
+    transform: rotate(-15deg);
+}
+
+.food-2 {
+    top: 15%;
+    right: 13%;
+    transform: rotate(15deg);
+}
+
+.food-3 {
+    bottom: 15%;
+    left: 18%;
+    transform: rotate(10deg);
+}
+
+.food-4 {
+    bottom: 15%;
+    right: 18%;
+    transform: rotate(-15deg);
+}
+
+.food-5 {
+    top: 48%;
+    left: 5%;
+}
+
+.food-6 {
+    top: 48%;
+    right: 5%;
+}
+
+/* ============================= */
+/* Button */
+/* ============================= */
+
+.btn {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 16px 32px;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+
+    /* เพิ่มเงาและลูกเล่น */
+    box-shadow: 0 5px 12px rgba(229, 57, 53, 0.25);
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background-color: var(--dark-red);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(198, 40, 40, 0.3);
+}
+
+.hero-note {
+    margin-top: 25px;
+    color: #777777;
+    font-size: 14px;
+}
+
+/* ============================= */
+/* How It Works */
+/* ============================= */
+
+.how-it-works {
+    padding: 70px 40px;
+    text-align: center;
+}
+
+.section-title h2 {
+    color: var(--dark-red);
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+.section-title p {
+    color: #777777;
+    margin-bottom: 40px;
+}
+
+
+/* Step Cards */
+
+.steps {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.step-card {
+    flex: 1;
+    padding: 35px 25px;
+    background-color: var(--white);
+    border: 1px solid #FFD6D6;
+    border-radius: 20px;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
+
+    transition: 0.3s;
+}
+
+.step-card:hover {
+    background-color: #FFF5F5;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(229, 57, 53, 0.12);
+}
+
+/* Step Icon */
+.step-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 90px;
+    height: 90px;
+
+    margin: 0 auto 20px;
+
+    background-color: var(--light-red);
+    border-radius: 50%;
+
+    font-size: 45px;
+}
+
+.step-card h3 {
+    color: var(--dark-red);
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.step-card p {
+    color: #666666;
+    line-height: 1.7;
+    text-align: center;
+}
+
+/* ============================= */
+/* Footer */
+/* ============================= */
+
+footer {
+    text-align: center;
+    padding: 25px;
+    background-color: var(--light-red);
+    color: var(--dark-red);
+    font-size: 14px;
+}
+
+/* ============================= */
+/* Responsive */
+/* ============================= */
+
+@media (max-width: 768px) {
+
+    header {
+        flex-direction: column;
+        gap: 18px;
+        padding: 20px;
+    }
+
+    nav a {
+        margin: 0 10px;
+    }
+
+    .hero {
+        padding: 100px 20px;
+    }
+
+    .hero h2 {
+        font-size: 30px;
+    }
+
+    .description {
+        font-size: 16px;
+    }
+
+    .food-decoration {
+        font-size: 32px;
+        opacity: 0.5;
+    }
+
+    .steps {
+        flex-direction: column;
+    }
+
+    .how-it-works {
+        padding: 50px 20px;
+    }
+
+    .section-title h2 {
+        font-size: 25px;
+    }
+
+    /* Responsive Hero */
+
+    .hero-layout {
+        flex-direction: column;
+        text-align: center;
+        gap: 35px;
+    }
+
+    .hero-content {
+        text-align: center;
+        max-width: 100%;
+    }
+
+    .hero-image {
+        width: 100%;
+        max-width: 450px;
+    }
+
+    .hero-image img {
+        height: 280px;
+    }
+
+    .food-decoration {
+        font-size: 32px;
+        opacity: 0.5;
+    }
+}
+
+
+/* Hero Layout */
+
+.hero-layout {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+    max-width: 1100px;
+    margin: auto;
+    text-align: left;
+}
+
+.hero-content {
+    flex: 1;
+    max-width: 600px;
+    margin: 0;
+}
+
+.hero-image {
+    flex: 0 0 40%;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 25px;
+    border: 8px solid white;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.10);
+}
+
+
+/* =================================
+   INGREDIENTS PAGE
+================================= */
+
+.ingredients-page {
+    max-width: 1100px;
+    margin: auto;
+    padding: 50px 25px;
+}
+
+/* Page Introduction */
+
+.ingredients-intro {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.ingredients-intro h2 {
+    color: #D62828;
+    font-size: 32px;
+    margin: 15px 0;
+}
+
+.ingredients-intro p {
+    color: #666;
+    line-height: 1.7;
+}
+
+/* Search Box */
+
+.ingredient-search {
+    max-width: 650px;
+    margin: 30px auto;
+}
+
+.ingredient-search input {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid #FFD6D6;
+    border-radius: 30px;
+    font-size: 16px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.ingredient-search input:focus {
+    border-color: #E53935;
+}
+
+/* Category */
+
+.ingredient-category {
+    margin: 40px 0 25px;
+}
+
+.ingredient-category h3,
+.ingredient-list h3,
+.selected-section h3 {
+    color: #C62828;
+    margin-bottom: 20px;
+}
+
+.category-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.category-btn {
+    background-color: white;
+    color: #D62828;
+    border: 1px solid #FFD6D6;
+    border-radius: 25px;
+    padding: 12px 22px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.category-btn:hover,
+.category-btn.active {
+    background-color: #E53935;
+    color: white;
+    border-color: #E53935;
+}
+
+/* Ingredient Cards */
+
+.ingredient-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.ingredient-card {
+    background-color: white;
+    border: 1px solid #FFD6D6;
+    border-radius: 18px;
+    padding: 25px 15px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    transition: 0.3s;
+}
+
+.ingredient-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 18px rgba(229, 57, 53, 0.12);
+}
+
+.ingredient-icon {
+    display: block;
+    font-size: 45px;
+    margin-bottom: 12px;
+}
+
+.ingredient-card h4 {
+    color: #333;
+    margin: 10px 0 15px;
+}
+
+/* Select Button */
+
+.select-btn {
+    background-color: #FFF0F0;
+    color: #D62828;
+    border: none;
+    border-radius: 20px;
+    padding: 9px 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.select-btn:hover {
+    background-color: #E53935;
+    color: white;
+}
+
+/* Selected Ingredients */
+
+.selected-section {
+    background-color: #FFF5F5;
+    border: 1px solid #FFD6D6;
+    border-radius: 20px;
+    padding: 30px;
+    margin-top: 45px;
+    text-align: center;
+}
+
+#selectedCount {
+    color: #E53935;
+    font-weight: bold;
+}
+
+#selectedList {
+    margin: 20px 0;
+    color: #666;
+    line-height: 2;
+}
+
+/* Confirm Button */
+
+#confirmBtn {
+    cursor: pointer;
+    border: none;
+}
+
+#confirmBtn:disabled {
+    background-color: #CCCCCC;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+/* No Result */
+
+#noResult {
+    text-align: center;
+    color: #999;
+    padding: 30px;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+
+    .ingredient-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ingredients-intro h2 {
+        font-size: 25px;
+    }
+
+    .category-buttons {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 400px) {
+
+    .ingredient-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .ingredient-card {
+        padding: 18px 8px;
+    }
+
+}
+
+/* =================================
+   INGREDIENTS - EXTRA DESIGN
+================================= */
+
+/* พื้นหลังหน้า Ingredients */
+
+.ingredients-page {
+    background: linear-gradient(
+        180deg,
+        #fffafa 0%,
+        #ffffff 50%,
+        #fff5f5 100%
+    );
+}
+
+/* Subtitle */
+
+.ingredients-intro .subtitle {
+    color: #E53935;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Search Box */
+
+.ingredient-search input {
+    box-shadow: 0 4px 15px rgba(229, 57, 53, 0.06);
+    transition: 0.3s;
+}
+
+.ingredient-search input:focus {
+    box-shadow: 0 0 0 4px rgba(229, 57, 53, 0.1);
+}
+
+/* Category Buttons */
+
+.category-btn {
+    transition: all 0.25s ease;
+}
+
+.category-btn:hover {
+    transform: translateY(-3px);
+}
+
+.category-btn.active {
+    box-shadow: 0 5px 12px rgba(229, 57, 53, 0.2);
+}
+
+/* Ingredient Cards */
+
+.ingredient-card {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.ingredient-card:hover {
+    transform: translateY(-7px);
+    border-color: #FF9999;
+    box-shadow: 0 10px 25px rgba(229, 57, 53, 0.12);
+}
+
+/* Ingredient Emoji */
+
+.ingredient-icon {
+    transition: transform 0.3s ease;
+}
+
+.ingredient-card:hover .ingredient-icon {
+    transform: scale(1.18) rotate(-5deg);
+}
+
+/* Selected Card */
+
+.ingredient-card.selected {
+    border: 2px solid #E53935;
+    background-color: #FFF5F5;
+    box-shadow: 0 5px 15px rgba(229, 57, 53, 0.1);
+}
+
+/* Selected Button */
+
+.ingredient-card.selected .select-btn {
+    background-color: #E53935;
+    color: white;
+}
+
+/* Selected List */
+
+#selectedList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.selected-item {
+    background-color: white;
+    border: 1px solid #FFBABA;
+    border-radius: 20px;
+    padding: 8px 14px;
+    color: #C62828;
+    font-size: 14px;
+}
+
+/* Confirm Button */
+
+#confirmBtn {
+    background-color: #E53935;
+    color: white;
+    padding: 14px 30px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+#confirmBtn:not(:disabled):hover {
+    background-color: #C62828;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(229, 57, 53, 0.25);
+}
+
+/* Animation */
+
+@keyframes ingredientAppear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.ingredient-card {
+    animation: ingredientAppear 0.35s ease;
+}
+
+/* ปุ่มลบวัตถุดิบในตะกร้า */
+
+.selected-item button {
+    font-size: 18px;
+    margin-left: 5px;
+}
+
+/* การ์ดที่ถูกเลือก */
+
+.ingredient-card.selected {
+    border: 2px solid #E53935;
+    background-color: #FFF5F5;
+}
+
+/* ปุ่มที่เลือกแล้ว */
+
+.ingredient-card.selected .select-btn {
+    background-color: #E53935;
+    color: white;
+}
+
+
+/* ปุ่มจัดการรายการวัตถุดิบ */
+
+.selected-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+/* ปุ่มล้างรายการทั้งหมด */
+
+.clear-btn {
+    background-color: white;
+    color: #E53935;
+    border: 1px solid #E53935;
+    border-radius: 30px;
+    padding: 14px 25px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.clear-btn:hover:not(:disabled) {
+    background-color: #FFF0F0;
+    transform: translateY(-2px);
+}
+
+/* เมื่อปุ่มไม่สามารถกดได้ */
+
+.clear-btn:disabled {
+    background-color: #EEEEEE;
+    color: #AAAAAA;
+    border-color: #DDDDDD;
+    cursor: not-allowed;
+}
+
+
+/* =================================
+   FIXES (วางต่อท้ายไฟล์)
+================================= */
+
+/* ฟอนต์ไทย */
+body {
+    font-family: 'Prompt', 'Noto Sans Thai', Arial, sans-serif;
+}
+
+button, input {
+    font-family: inherit;
+}
+
+/* แก้ Hero บนมือถือ (ต้องอยู่ท้ายไฟล์ เพื่อทับกฎด้านบน) */
+@media (max-width: 768px) {
+    .hero-layout {
+        flex-direction: column;
+        text-align: center;
+        gap: 35px;
+    }
+
+    .hero-content {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .hero-image {
+        flex: none;
+        width: 100%;
+        max-width: 450px;
+    }
+
+    .hero-image img {
+        height: 280px;
+    }
+}
+
+/* ปุ่ม ✕ ลบวัตถุดิบ */
+.selected-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.selected-item .remove-btn {
+    background: #FFE5E5;
+    color: #C62828;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 13px;
+    line-height: 1;
+    margin-left: 4px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.selected-item .remove-btn:hover {
+    background: #E53935;
+    color: white;
+}
+
+/* Header ติดขอบบน + หน้าที่เปิดอยู่ */
+header {
+    position: sticky;
+    top: 0;
+}
+
+nav a.active {
+    color: var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+    padding-bottom: 4px;
+}
+
+
+/* =================================
+   RESULT PAGE (recommendations.html)
+   RECIPE DETAIL PAGE (recipe-detail.html)
+================================= */
+
+:root {
+    --green: #2E7D32;
+    --green-light: #E8F5E9;
+}
+
+.result-page,
+.detail-page {
+    max-width: 1100px;
+    margin: auto;
+    padding: 50px 25px;
+}
+
+.result-page {
+    background: linear-gradient(180deg, #fffafa 0%, #ffffff 60%);
+}
+
+/* ---------- Chips ---------- */
+
+.chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.chip {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+.chip-selected {
+    background: white;
+    border: 1px solid #FFBABA;
+    color: #C62828;
+}
+
+.chip-have {
+    background: var(--green-light);
+    color: var(--green);
+    border: 1px solid #C8E6C9;
+}
+
+.chip-need {
+    background: white;
+    color: #888;
+    border: 1px dashed #CCC;
+}
+
+.chip-muted {
+    background: #EEE;
+    color: #888;
+}
+
+/* ---------- Summary ---------- */
+
+.result-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    background: #FFF5F5;
+    border: 1px solid #FFD6D6;
+    border-radius: 20px;
+    padding: 20px 25px;
+}
+
+.result-summary-text {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    color: #C62828;
+}
+
+.edit-link {
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.edit-link:hover {
+    text-decoration: underline;
+}
+
+/* ---------- Toolbar ---------- */
+
+.result-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 30px 0 20px;
+}
+
+.result-toolbar[hidden] {
+    display: none;
+}
+
+#resultCount {
+    color: #666;
+}
+
+.sort-box {
+    color: #666;
+    font-size: 14px;
+}
+
+.sort-box select {
+    margin-left: 8px;
+    padding: 9px 14px;
+    border: 2px solid #FFD6D6;
+    border-radius: 20px;
+    background: white;
+    color: #C62828;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+}
+
+.sort-box select:focus {
+    border-color: var(--primary-color);
+}
+
+/* ---------- Recipe Cards ---------- */
+
+.recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 25px;
+}
+
+.recipe-card {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border: 1px solid #FFD6D6;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    transition: 0.3s;
+    animation: ingredientAppear 0.4s ease both;
+}
+
+.recipe-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 26px rgba(229, 57, 53, 0.14);
+}
+
+.recipe-card.best {
+    border: 2px solid var(--primary-color);
+}
+
+.recipe-thumb {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    background: linear-gradient(135deg, #FFEBEE, #FFF8E1);
+}
+
+.recipe-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.thumb-emoji {
+    font-size: 70px;
+    transition: transform 0.3s ease;
+}
+
+.thumb-emoji.big {
+    font-size: 110px;
+}
+
+.recipe-card:hover .thumb-emoji {
+    transform: scale(1.15) rotate(-5deg);
+}
+
+.best-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--primary-color);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.recipe-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 20px;
+}
+
+.recipe-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.recipe-title-row h3 {
+    color: var(--dark-red);
+    font-size: 19px;
+}
+
+.score-badge {
+    flex-shrink: 0;
+    background: var(--green-light);
+    color: var(--green);
+    font-weight: 700;
+    font-size: 14px;
+    padding: 4px 11px;
+    border-radius: 20px;
+}
+
+.recipe-desc {
+    color: #777;
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 10px 0 14px;
+}
+
+.match-bar {
+    height: 8px;
+    background: #F0F0F0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.match-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #66BB6A, var(--green));
+    border-radius: 10px;
+    transition: width 0.8s ease;
+}
+
+.match-text {
+    color: #888;
+    font-size: 13px;
+    margin: 8px 0 12px;
+}
+
+.recipe-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    color: #666;
+    font-size: 13px;
+    margin: 16px 0;
+}
+
+.recipe-meta.big {
+    font-size: 15px;
+}
+
+.recipe-body .btn-small {
+    margin-top: auto;
+    text-align: center;
+}
+
+.btn-small {
+    padding: 12px 24px;
+    font-size: 15px;
+}
+
+/* ---------- State Boxes (loading / empty / error) ---------- */
+
+.state-box {
+    text-align: center;
+    padding: 60px 20px;
+    background: #FFF5F5;
+    border: 1px dashed #FFBABA;
+    border-radius: 24px;
+}
+
+.state-box h3 {
+    color: var(--dark-red);
+    margin: 14px 0 8px;
+}
+
+.state-box p {
+    color: #777;
+    margin-bottom: 22px;
+}
+
+.state-box .btn {
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 16px;
+}
+
+.state-icon {
+    font-size: 60px;
+}
+
+.loading-pan {
+    font-size: 64px;
+    display: inline-block;
+    animation: panShake 0.9s ease-in-out infinite;
+}
+
+@keyframes panShake {
+    0%, 100% { transform: rotate(-12deg) translateY(0); }
+    50%      { transform: rotate(12deg) translateY(-8px); }
+}
+
+/* ---------- Recipe Detail ---------- */
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 25px;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.detail-hero {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    background: linear-gradient(135deg, #FFEBEE, #FFF8E1);
+    border-radius: 28px;
+    padding: 35px 40px;
+    margin-bottom: 30px;
+}
+
+.detail-thumb {
+    flex: 0 0 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.detail-thumb img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 22px;
+    border: 6px solid white;
+}
+
+.detail-info h2 {
+    color: var(--dark-red);
+    font-size: 34px;
+    margin: 6px 0 12px;
+}
+
+.detail-desc {
+    color: #666;
+    line-height: 1.8;
+}
+
+.detail-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 25px;
+    align-items: start;
+}
+
+.detail-card {
+    background: white;
+    border: 1px solid #FFD6D6;
+    border-radius: 22px;
+    padding: 28px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+.card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.card-head h3 {
+    color: var(--dark-red);
+}
+
+.sub-head {
+    color: #888;
+    font-size: 14px;
+    margin: 22px 0 8px;
+}
+
+.progress-text {
+    color: var(--green);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Servings */
+
+.serving-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #FFF0F0;
+    padding: 5px 8px;
+    border-radius: 30px;
+}
+
+.serving-box button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    background: white;
+    color: var(--primary-color);
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.serving-box button:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Ingredient rows */
+
+.ing-list {
+    list-style: none;
+}
+
+.ing-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 4px;
+    border-bottom: 1px solid #F5F0F0;
+}
+
+.ing-name {
+    flex: 1;
+    font-weight: 500;
+}
+
+.ing-qty {
+    color: #777;
+    font-size: 14px;
+}
+
+.ing-list.light .ing-name {
+    font-weight: 400;
+    color: #666;
+}
+
+.tag {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.tag-have {
+    background: var(--green-light);
+    color: var(--green);
+}
+
+.tag-need {
+    background: #FFF3E0;
+    color: #E65100;
+}
+
+/* Shopping box */
+
+.shopping-box {
+    margin-top: 22px;
+    padding: 18px;
+    background: #FFF8E1;
+    border: 1px solid #FFE082;
+    border-radius: 16px;
+    color: #6D4C00;
+}
+
+.shopping-box p {
+    margin: 8px 0 14px;
+}
+
+.shopping-box.all-have {
+    background: var(--green-light);
+    border-color: #C8E6C9;
+    color: var(--green);
+    font-weight: 600;
+    text-align: center;
+}
+
+.shopping-box .clear-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+}
+
+/* Steps */
+
+.step-list {
+    list-style: none;
+}
+
+.step-row {
+    margin-bottom: 12px;
+}
+
+.step-row label {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 16px;
+    background: #FFFAFA;
+    border: 1px solid #FFE0E0;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.step-row label:hover {
+    border-color: #FF9999;
+}
+
+.step-check {
+    display: none;
+}
+
+.step-num {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 14px;
+    transition: 0.25s;
+}
+
+.step-text {
+    line-height: 1.7;
+}
+
+.step-row.done label {
+    background: var(--green-light);
+    border-color: #C8E6C9;
+}
+
+.step-row.done .step-num {
+    background: var(--green);
+}
+
+.step-row.done .step-text {
+    color: #888;
+    text-decoration: line-through;
+}
+
+/* Toast */
+
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 30px;
+    transform: translate(-50%, 20px);
+    background: #333;
+    color: white;
+    padding: 12px 22px;
+    border-radius: 30px;
+    font-size: 14px;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.3s;
+    z-index: 50;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 768px) {
+
+    .result-page,
+    .detail-page {
+        padding: 35px 18px;
+    }
+
+    .detail-hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 28px 20px;
+        gap: 20px;
+    }
+
+    .detail-thumb {
+        flex: none;
+    }
+
+    .detail-info h2 {
+        font-size: 26px;
+    }
+
+    .recipe-meta.big {
+        justify-content: center;
+    }
+
+    .detail-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .result-summary {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* ผู้ใช้ที่ปิดแอนิเมชันในระบบ */
+@media (prefers-reduced-motion: reduce) {
+    .loading-pan,
+    .recipe-card {
+        animation: none;
+    }
+
+    .match-fill {
+        transition: none;
+    }
+}
+
+
+/* =================================
+   DATASET INTEGRATION (หน้าเลือกวัตถุดิบ / ผลแนะนำ / รายละเอียดเมนู)
+================================= */
+
+/* ---------- หน้าเลือกวัตถุดิบ ---------- */
+
+.ingredients-page {
+    padding-bottom: 110px;   /* เว้นที่ให้แถบล่าง */
+}
+
+.ingredient-card {
+    cursor: pointer;
+}
+
+.ingredient-count {
+    display: block;
+    margin: -6px 0 12px;
+    color: #999;
+    font-size: 12px;
+}
+
+.ingredient-card.selected .ingredient-count {
+    color: var(--dark-red);
+}
+
+.ingredient-card h4 {
+    min-height: 2.6em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.3;
+}
+
+/* แถบสรุปติดขอบล่าง */
+
+.sticky-bar {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 40;
+
+    display: flex;
+    align-items: center;
+    gap: 22px;
+
+    padding: 10px 12px 10px 26px;
+    background: white;
+    border: 1px solid #FFBABA;
+    border-radius: 40px;
+    box-shadow: 0 10px 30px rgba(229, 57, 53, 0.22);
+    color: var(--dark-red);
+    animation: barUp 0.3s ease;
+}
+
+.sticky-bar[hidden] {
+    display: none;
+}
+
+.sticky-bar .btn {
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 15px;
+    padding: 12px 24px;
+}
+
+@keyframes barUp {
+    from { opacity: 0; transform: translate(-50%, 20px); }
+    to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* ---------- หน้าผลแนะนำ ---------- */
+
+.toolbar-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.recipe-en {
+    color: #999;
+    font-size: 13px;
+    margin: 2px 0 12px;
+}
+
+.status-pill {
+    align-self: flex-start;
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 14px;
+}
+
+.status-pill.ready {
+    background: var(--green-light);
+    color: var(--green);
+}
+
+.status-pill.need {
+    background: #FFF3E0;
+    color: #E65100;
+}
+
+.recipe-meta .tag {
+    background: #F7F7F7;
+    color: #666;
+}
+
+.recipe-meta .tag-course {
+    background: #FFF0F0;
+    color: #C62828;
+}
+
+.recipe-body .chip-row {
+    max-height: 96px;
+    overflow: hidden;
+}
+
+.load-more-box {
+    text-align: center;
+    margin-top: 35px;
+}
+
+.load-more-box[hidden],
+#loadMoreBtn[hidden] {
+    display: none;
+}
+
+/* ปุ่มหัวใจบนการ์ด */
+
+.fav-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    font-size: 19px;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    transition: transform 0.2s ease;
+}
+
+.fav-btn:hover {
+    transform: scale(1.15);
+}
+
+.fav-btn.active {
+    animation: heartPop 0.35s ease;
+}
+
+@keyframes heartPop {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.4); }
+    100% { transform: scale(1); }
+}
+
+/* ---------- หน้ารายละเอียด ---------- */
+
+.fav-pill {
+    margin-top: 18px;
+    padding: 10px 20px;
+    border: 1px solid #FFBABA;
+    border-radius: 30px;
+    background: white;
+    color: var(--primary-color);
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.fav-pill:hover {
+    background: #FFF0F0;
+}
+
+.fav-pill.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.recipe-meta.big span {
+    background: rgba(255, 255, 255, 0.75);
+    padding: 6px 14px;
+    border-radius: 20px;
+}
+
+.time-note,
+.data-note,
+.source-note {
+    color: #999;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.time-note {
+    margin-top: 10px;
+}
+
+.data-note {
+    margin-top: 20px;
+}
+
+.source-note {
+    margin-top: 18px;
+}
+
+.source-note a {
+    color: var(--primary-color);
+}
+
+.no-steps {
+    text-align: center;
+    padding: 30px 15px;
+    background: #FFFAFA;
+    border: 1px dashed #FFBABA;
+    border-radius: 18px;
+}
+
+.no-steps h4 {
+    color: var(--dark-red);
+    margin: 10px 0 8px;
+}
+
+.no-steps p {
+    color: #777;
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 18px;
+}
+
+.link-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.link-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+/* ---------- เลื่อนแล้วค่อย ๆ ปรากฏ (หน้าแรก) ---------- */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: none;
+}
+
+/* อีโมจิลอยเบา ๆ ที่หน้าแรก */
+
+.food-decoration {
+    animation: floatFood 5s ease-in-out infinite;
+}
+
+.food-2, .food-4, .food-6 {
+    animation-delay: -2.5s;
+}
+
+@keyframes floatFood {
+    0%, 100% { translate: 0 0; }
+    50%      { translate: 0 -12px; }
+}
+
+@media (max-width: 768px) {
+    .toolbar-controls {
+        width: 100%;
+    }
+
+    .sticky-bar {
+        width: calc(100% - 28px);
+        justify-content: space-between;
+        gap: 10px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .food-decoration,
+    .sticky-bar,
+    .fav-btn.active {
+        animation: none;
+    }
+
+    .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+
+/* ป้ายบอกแหล่งข้อมูล (Flask API / ในเครื่อง) */
+
+.source-note-bar {
+    margin-top: 18px;
+    padding: 9px 16px;
+    border-radius: 14px;
+    background: #FFF8E1;
+    color: #8A6100;
+    font-size: 13px;
+}
+
+.source-note-bar[hidden] {
+    display: none;
+}
+
+.source-note-bar.from-api {
+    background: var(--green-light);
+    color: var(--green);
+}
