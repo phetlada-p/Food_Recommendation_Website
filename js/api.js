@@ -182,6 +182,7 @@ function recipeTime(r) {
     return r.ttotal || r.tcook || null;
 }
 
+
 function mockRecommend(thaiList, topN) {
     // 1. แปลงไทย -> อังกฤษ ด้วย ingredient_mapping_147.csv
     const userSet = new Set();
@@ -192,9 +193,15 @@ function mockRecommend(thaiList, topN) {
         }
     });
 
+    // ตรวจสอบการแปลงชื่อวัตถุดิบ
+    console.log("วัตถุดิบที่เลือก:", thaiList);
+    console.log("ผลการแปลง:", Array.from(userSet));
+    console.log("INGREDIENT_MAP เนื้อหมู:", INGREDIENT_MAP["เนื้อหมู"]);
+
     if (userSet.size === 0) {
         return [];
     }
+
 
     // 2. เวกเตอร์ TF-IDF ของผู้ใช้ (เฉพาะวัตถุดิบที่โมเดลรู้จัก)
     const tfidf = getTfidf();
