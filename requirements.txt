@@ -7,3 +7,10 @@ pandas
 flask
 flask-cors
 gunicorn
+
+# AI Food Image Recognition
+torch
+torchvision
+timm
+Pillow
+huggingface_hub

@@ -1,5 +1,8 @@
 import sys
+import os
 from pathlib import Path
+
+from huggingface_hub import hf_hub_download
 
 import torch
 import timm
@@ -17,6 +20,7 @@ MODEL_REPO = ROOT / "tools" / "ConvNeXt-Food-CLF-75"
 CHECKPOINT_PATH = (
     ROOT / "tools" / "model_weights" / "checkpoint.pth.tar"
 )
+HF_MODEL_REPO = "AXM22AOM/food-recommendation-model"
 
 # ใช้ CPU เพื่อให้ทำงานได้กับ Mac ที่ใช้อยู่
 DEVICE = torch.device("cpu")
@@ -57,10 +61,30 @@ class FoodImageRecognizer:
                 f"ไม่พบโฟลเดอร์โมเดล: {MODEL_REPO}"
             )
 
-        if not CHECKPOINT_PATH.exists():
-            raise FileNotFoundError(
-                f"ไม่พบไฟล์น้ำหนัก AI: {CHECKPOINT_PATH}"
+        # ตรวจสอบไฟล์โมเดลในเครื่องก่อน
+        checkpoint_path = CHECKPOINT_PATH
+
+        # ถ้าไม่มีไฟล์ในเครื่อง ให้ดาวน์โหลดจาก Hugging Face
+        if not checkpoint_path.exists():
+            print("ไม่พบไฟล์โมเดลในเครื่อง")
+            print("กำลังดาวน์โหลดจาก Hugging Face...")
+
+            hf_token = os.environ.get("HF_TOKEN")
+
+            if not hf_token:
+                raise RuntimeError(
+                    "ไม่พบ HF_TOKEN กรุณาตั้งค่า Hugging Face Token"
+                )
+
+            checkpoint_path = Path(
+                hf_hub_download(
+                    repo_id=HF_MODEL_REPO,
+                    filename="checkpoint.pth.tar",
+                    token=hf_token
+                )
             )
+
+            print("ดาวน์โหลดไฟล์โมเดลสำเร็จ")
 
         if str(MODEL_REPO) not in sys.path:
             sys.path.insert(0, str(MODEL_REPO))
@@ -79,7 +103,7 @@ class FoodImageRecognizer:
 
             # โหลดข้อมูล checkpoint
             checkpoint = torch.load(
-                CHECKPOINT_PATH,
+                checkpoint_path,
                 map_location=DEVICE,
                 weights_only=False
             )
