@@ -16,3 +16,16 @@ venv/
 
 # Jupyter
 .ipynb_checkpoints/
+
+# AI virtual environment
+.venv-ai/
+
+# Backup files
+*_backup_*.py
+*_backup_*.html
+*_backup_*.js
+*_backup_*.css
+*_backup_*.txt
+
+# Large AI model weights (upload separately)
+tools/model_weights/

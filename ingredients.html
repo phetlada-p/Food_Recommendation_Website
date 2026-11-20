@@ -51,6 +51,75 @@
         </section>
 
 
+
+        <!-- AI Food Image Recognition -->
+        <section class="ai-scanner-section">
+            <div class="ai-scanner-header">
+                <span class="ai-scanner-icon">📸</span>
+                <div>
+                    <h3>AI ตรวจจับวัตถุดิบจากรูปภาพ</h3>
+                    <p>ถ่ายภาพหรือเลือกรูปวัตถุดิบ ให้ AI ช่วยตรวจสอบ</p>
+                </div>
+            </div>
+
+            <div class="ai-scanner-actions">
+                <button type="button" id="openCameraBtn" class="scanner-btn">
+                    📷 เปิดกล้อง
+                </button>
+
+                <label for="imageUpload" class="scanner-btn upload-btn">
+                    🖼️ เลือกรูปภาพ
+                </label>
+
+                <input
+                    type="file"
+                    id="imageUpload"
+                    accept="image/jpeg,image/png,image/webp"
+                    capture="environment"
+                    hidden
+                >
+            </div>
+
+            <div id="cameraArea" class="camera-area" hidden>
+                <video id="cameraPreview" autoplay playsinline></video>
+
+                <div class="camera-actions">
+                    <button type="button" id="capturePhotoBtn" class="scanner-btn">
+                        📸 ถ่ายภาพ
+                    </button>
+                    <button type="button" id="closeCameraBtn" class="scanner-btn close-camera-btn">
+                        ✕ ปิดกล้อง
+                    </button>
+                </div>
+
+                <canvas id="cameraCanvas" hidden></canvas>
+            </div>
+
+            <div id="imagePreviewArea" class="image-preview-area" hidden>
+                <img id="imagePreview" alt="รูปภาพวัตถุดิบที่เลือก">
+
+                <button type="button" id="recognizeImageBtn" class="btn recognize-btn">
+                    ✨ ให้ AI วิเคราะห์รูปภาพ
+                </button>
+            </div>
+
+            <div id="recognitionLoading" class="recognition-loading" hidden>
+                <span class="loading-spinner"></span>
+                <p>AI กำลังวิเคราะห์วัตถุดิบ กรุณารอสักครู่...</p>
+            </div>
+
+            <div id="recognitionError" class="recognition-error" hidden></div>
+
+            <div id="recognitionResults" class="recognition-results" hidden>
+                <h4>🔍 ผลการตรวจจับวัตถุดิบ</h4>
+                <p class="recognition-hint">
+                    คะแนนความมั่นใจเป็นค่าจากโมเดล AI ไม่ใช่การยืนยันว่าพบวัตถุดิบแน่นอน
+                </p>
+                <div id="recognitionList"></div>
+            </div>
+        </section>
+
+
         <!-- Search -->
         <section class="ingredient-search">
 

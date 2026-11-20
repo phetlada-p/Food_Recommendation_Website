@@ -5,6 +5,9 @@ from pathlib import Path
 import sys
 import sqlite3
 import json
+from io import BytesIO
+
+from tools.food_image_recognizer import FoodImageRecognizer
 
 # ========================================
 # 1. กำหนดตำแหน่งโปรเจกต์
@@ -26,6 +29,22 @@ from recommender import load_model
 
 app = Flask(__name__)
 CORS(app)
+
+# จำกัดขนาดรูปภาพไม่เกิน 8 MB
+app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024
+
+# โหลดโมเดลตรวจจับวัตถุดิบเพียงครั้งเดียว
+print("Loading Food Image Recognition Model...")
+
+image_recognizer = None
+
+try:
+    image_recognizer = FoodImageRecognizer()
+    print("Food Image Recognition Model loaded successfully!")
+
+except Exception:
+    app.logger.exception("Cannot load Food Image Recognition Model")
+    print("Image recognition is unavailable.")
 
 print("Loading Smart Fridge AI Model...")
 
@@ -89,12 +108,91 @@ def frontend_files(filename):
 # 5. ตรวจสอบสถานะ AI Model
 # ========================================
 
-@app.route("/api/health", methods=["GET"])
-def health():
+# ========================================
+# API วิเคราะห์วัตถุดิบจากรูปภาพ
+# ========================================
+
+@app.route("/api/recognize", methods=["POST"])
+def recognize_ingredients():
+
+    # ตรวจสอบว่าโมเดลพร้อมใช้งานหรือไม่
+    if image_recognizer is None:
+        return jsonify({
+            "status": "error",
+            "error": "Image recognition model is unavailable"
+        }), 503
+
+    # ตรวจสอบว่ามีไฟล์ภาพหรือไม่
+    if "image" not in request.files:
+        return jsonify({
+            "status": "error",
+            "error": "กรุณาแนบรูปภาพ"
+        }), 400
+
+    image_file = request.files["image"]
+
+    if not image_file.filename:
+        return jsonify({
+            "status": "error",
+            "error": "ไม่ได้เลือกไฟล์รูปภาพ"
+        }), 400
+
+    # ตรวจสอบนามสกุลไฟล์
+    allowed_extensions = {
+        ".jpg", ".jpeg", ".png", ".webp"
+    }
+
+    extension = Path(image_file.filename).suffix.lower()
+
+    if extension not in allowed_extensions:
+        return jsonify({
+            "status": "error",
+            "error": "รองรับเฉพาะ JPG, JPEG, PNG และ WEBP"
+        }), 400
+
+    try:
+        # อ่านข้อมูลรูปภาพ
+        image_bytes = image_file.read()
+
+        if not image_bytes:
+            return jsonify({
+                "status": "error",
+                "error": "ไฟล์รูปภาพว่างเปล่า"
+            }), 400
+
+        # วิเคราะห์รูปภาพ
+        result = image_recognizer.predict(
+            BytesIO(image_bytes),
+            top_k=10
+        )
+
+        return jsonify(result), 200
+
+    except ValueError as error:
+        return jsonify({
+            "status": "error",
+            "error": str(error)
+        }), 400
+
+    except Exception:
+        app.logger.exception("Image recognition error")
+
+        return jsonify({
+            "status": "error",
+            "error": "ไม่สามารถวิเคราะห์รูปภาพได้"
+        }), 500
+
+
+# ========================================
+# จัดการกรณีรูปภาพมีขนาดเกิน 8 MB
+# ========================================
+
+@app.errorhandler(413)
+def file_too_large(error):
     return jsonify({
-        "status": "ok",
-        "message": "Flask API and AI Model are ready"
-    }), 200
+        "status": "error",
+        "error": "รูปภาพมีขนาดใหญ่เกินไป กรุณาเลือกภาพไม่เกิน 8 MB"
+    }), 413
 
 
 # ========================================

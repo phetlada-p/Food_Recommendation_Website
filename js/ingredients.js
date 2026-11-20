@@ -282,3 +282,342 @@ try {
 
 filterIngredients();
 updateSelectedIngredients();
+
+// =====================================================
+// AI FOOD IMAGE RECOGNITION
+// =====================================================
+
+const openCameraBtn = document.getElementById("openCameraBtn");
+const imageUpload = document.getElementById("imageUpload");
+const cameraArea = document.getElementById("cameraArea");
+const cameraPreview = document.getElementById("cameraPreview");
+const capturePhotoBtn = document.getElementById("capturePhotoBtn");
+const closeCameraBtn = document.getElementById("closeCameraBtn");
+const cameraCanvas = document.getElementById("cameraCanvas");
+
+const imagePreviewArea = document.getElementById("imagePreviewArea");
+const imagePreview = document.getElementById("imagePreview");
+const recognizeImageBtn = document.getElementById("recognizeImageBtn");
+
+const recognitionLoading = document.getElementById("recognitionLoading");
+const recognitionError = document.getElementById("recognitionError");
+const recognitionResults = document.getElementById("recognitionResults");
+const recognitionList = document.getElementById("recognitionList");
+
+let cameraStream = null;
+let selectedImageFile = null;
+let imagePreviewUrl = null;
+
+
+// ---------- แสดงข้อความผิดพลาด ----------
+
+function showRecognitionError(message) {
+    recognitionError.textContent = message;
+    recognitionError.hidden = false;
+}
+
+function clearRecognitionError() {
+    recognitionError.textContent = "";
+    recognitionError.hidden = true;
+}
+
+
+// ---------- ปิดกล้อง ----------
+
+function stopCamera() {
+    if (cameraStream) {
+        cameraStream.getTracks().forEach(function (track) {
+            track.stop();
+        });
+
+        cameraStream = null;
+    }
+
+    cameraPreview.srcObject = null;
+    cameraArea.hidden = true;
+}
+
+closeCameraBtn.addEventListener("click", stopCamera);
+
+
+// ---------- จัดการรูปภาพที่เลือก ----------
+
+function setSelectedImage(file) {
+    if (!file) return;
+
+    const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+    ];
+
+    if (!allowedTypes.includes(file.type)) {
+        showRecognitionError("กรุณาเลือกรูปภาพ JPG, PNG หรือ WEBP");
+        return;
+    }
+
+    if (file.size > 8 * 1024 * 1024) {
+        showRecognitionError("รูปภาพต้องมีขนาดไม่เกิน 8 MB");
+        return;
+    }
+
+    selectedImageFile = file;
+
+    if (imagePreviewUrl) {
+        URL.revokeObjectURL(imagePreviewUrl);
+    }
+
+    imagePreviewUrl = URL.createObjectURL(file);
+    imagePreview.src = imagePreviewUrl;
+
+    imagePreviewArea.hidden = false;
+    recognitionResults.hidden = true;
+    recognitionList.textContent = "";
+
+    clearRecognitionError();
+}
+
+
+// ---------- เลือกรูปภาพจากเครื่อง ----------
+
+imageUpload.addEventListener("change", function (event) {
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    stopCamera();
+    setSelectedImage(file);
+
+    // เลือกรูปเดิมซ้ำได้ในครั้งต่อไป
+    imageUpload.value = "";
+});
+
+
+// ---------- เปิดกล้อง ----------
+
+openCameraBtn.addEventListener("click", async function () {
+    clearRecognitionError();
+
+    if (!navigator.mediaDevices ||
+        !navigator.mediaDevices.getUserMedia) {
+
+        showRecognitionError(
+            "เบราว์เซอร์ไม่รองรับการเปิดกล้อง กรุณาใช้ปุ่มเลือกรูปภาพแทน"
+        );
+        return;
+    }
+
+    try {
+        stopCamera();
+
+        cameraStream = await navigator.mediaDevices.getUserMedia({
+            video: {
+                facingMode: { ideal: "environment" }
+            },
+            audio: false
+        });
+
+        cameraPreview.srcObject = cameraStream;
+        cameraArea.hidden = false;
+
+        await cameraPreview.play();
+
+    } catch (error) {
+        console.error("Camera error:", error);
+
+        stopCamera();
+
+        if (error.name === "NotAllowedError") {
+            showRecognitionError(
+                "กรุณาอนุญาตให้เว็บไซต์เข้าถึงกล้องก่อนใช้งาน"
+            );
+        } else {
+            showRecognitionError(
+                "ไม่สามารถเปิดกล้องได้ กรุณาลองเลือกรูปภาพแทน"
+            );
+        }
+    }
+});
+
+
+// ---------- ถ่ายภาพจากกล้อง ----------
+
+capturePhotoBtn.addEventListener("click", function () {
+    if (!cameraStream || !cameraPreview.videoWidth) {
+        showRecognitionError("กล้องยังไม่พร้อม กรุณารอสักครู่");
+        return;
+    }
+
+    const width = cameraPreview.videoWidth;
+    const height = cameraPreview.videoHeight;
+
+    cameraCanvas.width = width;
+    cameraCanvas.height = height;
+
+    const context = cameraCanvas.getContext("2d");
+
+    context.drawImage(
+        cameraPreview,
+        0,
+        0,
+        width,
+        height
+    );
+
+    cameraCanvas.toBlob(function (blob) {
+        if (!blob) {
+            showRecognitionError("ไม่สามารถถ่ายภาพได้");
+            return;
+        }
+
+        const file = new File(
+            [blob],
+            "camera-food.jpg",
+            { type: "image/jpeg" }
+        );
+
+        setSelectedImage(file);
+        stopCamera();
+
+    }, "image/jpeg", 0.9);
+});
+
+
+// ---------- ส่งรูปภาพไปวิเคราะห์ด้วย AI ----------
+
+recognizeImageBtn.addEventListener("click", async function () {
+    if (!selectedImageFile) {
+        showRecognitionError("กรุณาเลือกรูปภาพก่อน");
+        return;
+    }
+
+    clearRecognitionError();
+
+    recognitionResults.hidden = true;
+    recognitionLoading.hidden = false;
+    recognizeImageBtn.disabled = true;
+
+    try {
+        const formData = new FormData();
+
+        formData.append("image", selectedImageFile);
+
+        const response = await fetch("/api/recognize", {
+            method: "POST",
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || result.status !== "success") {
+            throw new Error(
+                result.error || result.message || "ไม่สามารถวิเคราะห์ภาพได้"
+            );
+        }
+
+        displayRecognitionResults(result.predictions || []);
+
+    } catch (error) {
+        console.error("Recognition error:", error);
+
+        showRecognitionError(
+            error.message || "เกิดข้อผิดพลาดในการวิเคราะห์รูปภาพ"
+        );
+
+    } finally {
+        recognitionLoading.hidden = true;
+        recognizeImageBtn.disabled = false;
+    }
+});
+
+
+// ---------- แสดงผลวัตถุดิบที่ AI ตรวจพบ ----------
+
+function displayRecognitionResults(predictions) {
+    recognitionList.textContent = "";
+
+    if (!predictions.length) {
+        recognitionList.textContent = "ไม่พบข้อมูลวัตถุดิบจากรูปภาพ";
+        recognitionResults.hidden = false;
+        return;
+    }
+
+    predictions.forEach(function (prediction) {
+        const row = document.createElement("div");
+        row.className = "recognition-item";
+
+        const info = document.createElement("div");
+        info.className = "recognition-info";
+
+        const name = document.createElement("strong");
+
+        name.textContent = prediction.label
+            ? prediction.label
+            : prediction.class_name + " (ยังไม่มีชื่อภาษาไทย)";
+
+        const confidence = document.createElement("span");
+        confidence.textContent =
+            "ความมั่นใจ " + prediction.confidence + "%";
+
+        info.appendChild(name);
+        info.appendChild(confidence);
+
+        const action = document.createElement("button");
+        action.type = "button";
+        action.className = "recognition-add-btn";
+
+        const matchedItem = prediction.matched
+            ? itemByLabel.get(prediction.label)
+            : null;
+
+        if (!matchedItem) {
+            action.textContent = "ยังเพิ่มไม่ได้";
+            action.disabled = true;
+
+        } else {
+            const alreadySelected = selectedIngredients.some(function (item) {
+                return item.label === matchedItem.label;
+            });
+
+            action.textContent = alreadySelected
+                ? "✓ เลือกแล้ว"
+                : "＋ เพิ่มวัตถุดิบ";
+
+            action.disabled = alreadySelected;
+
+            action.addEventListener("click", function () {
+                const isSelected = selectedIngredients.some(function (item) {
+                    return item.label === matchedItem.label;
+                });
+
+                if (!isSelected) {
+                    toggleIngredient(matchedItem.label);
+                }
+
+                action.textContent = "✓ เลือกแล้ว";
+                action.disabled = true;
+            });
+        }
+
+        row.appendChild(info);
+        row.appendChild(action);
+
+        recognitionList.appendChild(row);
+    });
+
+    recognitionResults.hidden = false;
+}
+
+
+// ---------- คืนทรัพยากรเมื่อออกจากหน้า ----------
+
+window.addEventListener("beforeunload", function () {
+    stopCamera();
+
+    if (imagePreviewUrl) {
+        URL.revokeObjectURL(imagePreviewUrl);
+    }
+});
+
+console.log("AI Food Image Recognition UI ready!");
+
