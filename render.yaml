@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: food-recommendation-website
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --workers 1 --threads 2 --timeout 300
+    healthCheckPath: /api/db/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.18
+      - key: HF_TOKEN
+        sync: false
