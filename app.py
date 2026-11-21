@@ -7,11 +7,8 @@ import sqlite3
 import json
 from io import BytesIO
 
-# โมเดลรูปภาพใช้ torch ซึ่งหนัก: ถ้าไม่ได้ติดตั้ง ระบบแนะนำเมนูยังต้องทำงานได้
-try:
-    from tools.food_image_recognizer import FoodImageRecognizer
-except ImportError:
-    FoodImageRecognizer = None
+# โมเดลรูปภาพจะ Import เฉพาะเมื่อมีการเรียกใช้งาน
+FoodImageRecognizer = None
 
 # ========================================
 # 1. กำหนดตำแหน่งโปรเจกต์
@@ -44,8 +41,10 @@ def get_image_recognizer():
     global image_recognizer
 
     if image_recognizer is None:
-        if FoodImageRecognizer is None:
-            raise ImportError("torch / timm is not installed")
+        try:
+            from tools.food_image_recognizer import FoodImageRecognizer
+        except ImportError as exc:
+            raise ImportError("torch / timm is not installed") from exc
 
         print("Loading Food Image Recognition Model...")
         image_recognizer = FoodImageRecognizer()
