@@ -91,6 +91,7 @@ def frontend_files(filename):
     allowed_html = {
         "index.html",
         "ingredients.html",
+        "menus.html",
         "recommendations.html",
         "recipe-detail.html"
     }
