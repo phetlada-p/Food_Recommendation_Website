@@ -41,6 +41,8 @@ INGREDIENT_MAPPING = {
     "pork": "เนื้อหมู",
     "shrimp": "กุ้ง",
     "sprouts": "ถั่วงอก",
+    "rice": "ข้าว",
+    "sugar": "น้ำตาล",
 }
 
 
