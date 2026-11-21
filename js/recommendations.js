@@ -127,7 +127,7 @@ function cardHtml(item, index, isFirstRank) {
         <article class="recipe-card ${best ? "best" : ""}">
 
             <div class="recipe-thumb">
-                <span class="thumb-emoji">${esc(courseEmoji(item.course))}</span>
+                ${dishImageHtml({ id: item.id, name: item.name, course: item.course, ingTh: item.matched.concat(item.missing) }, "card-dish")}
                 ${best ? '<span class="best-badge">🏆 แนะนำที่สุด</span>' : ""}
 
                 <button type="button"

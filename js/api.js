@@ -222,11 +222,6 @@ function mockRecommend(thaiList, topN) {
         }
     });
 
-    // ตรวจสอบการแปลงชื่อวัตถุดิบ
-    console.log("วัตถุดิบที่เลือก:", thaiList);
-    console.log("ผลการแปลง:", Array.from(userSet));
-    console.log("INGREDIENT_MAP เนื้อหมู:", INGREDIENT_MAP["เนื้อหมู"]);
-
     if (userSet.size === 0) {
         return [];
     }

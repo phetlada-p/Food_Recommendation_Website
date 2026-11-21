@@ -1906,12 +1906,14 @@
     "ingredients_en": [
       "Papaya salad",
       "fish sauce",
-      "garlic"
+      "garlic",
+      "tomato"
     ],
     "ingredients_th_translation_draft": [
       "",
       "น้ำปลา",
-      "กระเทียม"
+      "กระเทียม",
+      "มะเขือเทศ"
     ],
     "required_ingredients": [
       "มะละกอดิบ",

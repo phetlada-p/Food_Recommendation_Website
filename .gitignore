@@ -29,3 +29,8 @@ venv/
 
 # Large AI model weights (upload separately)
 tools/model_weights/
+
+# Local backup and old files
+app_before_friend_project.py
+*_backup*
+*_old.*

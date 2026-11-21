@@ -520,9 +520,18 @@ recognizeImageBtn.addEventListener("click", async function () {
     } catch (error) {
         console.error("Recognition error:", error);
 
-        showRecognitionError(
-            error.message || "เกิดข้อผิดพลาดในการวิเคราะห์รูปภาพ"
-        );
+        // fetch ล้มเหลว (TypeError) = ติดต่อเซิร์ฟเวอร์ไม่ได้ มักเกิดจากเปิดหน้าเว็บโดยไม่ได้รัน Flask
+        if (error instanceof TypeError) {
+            showRecognitionError(
+                "ติดต่อเซิร์ฟเวอร์ไม่ได้ ฟีเจอร์ตรวจรูปภาพต้องเปิดเว็บผ่าน Flask " +
+                "(รัน python app.py แล้วเข้า http://localhost:5001) " +
+                "ตอนนี้ยังเลือกวัตถุดิบด้วยตัวเองได้ตามปกติ"
+            );
+        } else {
+            showRecognitionError(
+                error.message || "เกิดข้อผิดพลาดในการวิเคราะห์รูปภาพ"
+            );
+        }
 
     } finally {
         recognitionLoading.hidden = true;
@@ -619,5 +628,4 @@ window.addEventListener("beforeunload", function () {
     }
 });
 
-console.log("AI Food Image Recognition UI ready!");
 

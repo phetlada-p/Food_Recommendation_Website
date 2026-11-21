@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เมนูแนะนำ | Foody</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css" id="css-base-original">
+    <link rel="stylesheet" href="css/foody-original.css" id="css-foody-original">
+    <link rel="stylesheet" href="css/style-slide.css" id="css-base-slide" media="not all">
+    <link rel="stylesheet" href="css/foody.css" id="css-foody-slide" media="not all">
+    <script>
+        // เลือกธีมก่อนแสดงผล (ค่าเริ่มต้น = สไตล์ดั้งเดิม, สลับได้ด้วยปุ่ม 🎨 มุมซ้ายล่าง)
+        (function () {
+            var theme = "original";
+            try { theme = localStorage.getItem("foodyTheme") || "original"; } catch (e) {}
+            var slide = theme === "slide";
+            document.documentElement.setAttribute("data-theme", slide ? "slide" : "original");
+            function set(id, on) { document.getElementById(id).media = on ? "all" : "not all"; }
+            set("css-base-original", !slide); set("css-foody-original", !slide);
+            set("css-base-slide", slide); set("css-foody-slide", slide);
+        })();
+    </script>
+</head>
+<body>
+
+    <header>
+        <h1><a href="index.html" class="brand">🍅 Foody <small>What's in Your Fridge?</small></a></h1>
+
+        <nav>
+            <a href="index.html">หน้าแรก</a>
+            <a href="menus.html" class="active">เมนูแนะนำ</a>
+            <a href="ingredients.html">เลือกวัตถุดิบ</a>
+        </nav>
+    </header>
+
+    <main class="menus-page">
+
+        <section class="ingredients-intro">
+            <p class="subtitle">🍽️ ALL MENUS</p>
+            <h2>เมนูอาหารไทยทั้งหมด</h2>
+            <p>ค้นหาและเลือกดูเมนูได้เลย ไม่ต้องเลือกวัตถุดิบก่อน</p>
+        </section>
+
+        <section class="menu-filters">
+            <input type="search" id="menuSearch" class="menu-search"
+                   placeholder="🔍 ค้นหาชื่อเมนู หรือวัตถุดิบ เช่น ต้มยำ, กะทิ, กุ้ง"
+                   aria-label="ค้นหาเมนู">
+
+            <div class="tabs" id="menuTabs">
+                <button type="button" class="tab active" data-course="all">ทั้งหมด</button>
+                <button type="button" class="tab" data-course="main dish">🍛 จานหลัก</button>
+                <button type="button" class="tab" data-course="snack">🥟 ของว่าง</button>
+                <button type="button" class="tab" data-course="dessert">🍮 ของหวาน</button>
+                <button type="button" class="tab" data-course="other">🥗 ยำ/ซุป</button>
+            </div>
+
+            <div class="menu-selects">
+                <select id="menuRegion" aria-label="กรองตามภาค">
+                    <option value="all">ทุกภาค</option>
+                    <option value="Central">ภาคกลาง</option>
+                    <option value="North">ภาคเหนือ</option>
+                    <option value="Northeast">ภาคอีสาน</option>
+                    <option value="South">ภาคใต้</option>
+                </select>
+                <select id="menuSort" aria-label="เรียงลำดับ">
+                    <option value="name">เรียงตามชื่อ ก-ฮ</option>
+                    <option value="shuffle">สุ่มเรียง</option>
+                    <option value="ing">วัตถุดิบน้อยไปมาก (ทำง่าย)</option>
+                </select>
+            </div>
+        </section>
+
+        <p class="result-count" id="menuCount"></p>
+        <div class="pick-grid" id="menuGrid"></div>
+        <div class="load-more-wrap"><button type="button" id="menuMore" class="btn btn-ghost" hidden>ดูเพิ่มเติม</button></div>
+
+    </main>
+
+    <footer>
+        <p>❤️ Foody | What's in Your Fridge? | AI Food Recommendation</p>
+    </footer>
+
+    <script src="js/recipes-data.js"></script>
+    <script src="js/food-art.js"></script>
+    <script src="js/menus.js"></script>
+    <script src="js/theme.js"></script>
+</body>
+</html>

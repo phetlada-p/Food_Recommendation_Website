@@ -87,6 +87,7 @@ const INGREDIENT_DATA = [
     {"label":"ฟักเขียว","names":["ฟักเขียว"],"emoji":"🥒","category":"vegetable","count":1},
     {"label":"มะขามเปียก","names":["มะขามเปียก/เนื้อมะขามเปียก"],"emoji":"🍯","category":"seasoning","count":1},
     {"label":"มะม่วงสุก","names":["มะม่วงสุก"],"emoji":"🥭","category":"fruit","count":1},
+    {"label":"มะเขือเทศ","names":["มะเขือเทศ"],"emoji":"🍅","category":"vegetable","count":1},
     {"label":"มันฝรั่ง","names":["มันฝรั่ง"],"emoji":"🥔","category":"vegetable","count":1},
     {"label":"มันสำปะหลัง","names":["มันสำปะหลัง"],"emoji":"🍠","category":"vegetable","count":1},
     {"label":"ยีสต์","names":["ยีสต์"],"emoji":"🍞","category":"staple","count":1},
@@ -111,5 +112,6 @@ const INGREDIENT_DATA = [
     {"label":"ไข่ต้ม","names":["ไข่ต้ม"],"emoji":"🥚","category":"dairy","count":1},
     {"label":"ไส้กรอกอีสาน","names":["ไส้กรอกอีสาน"],"emoji":"🌭","category":"meat","count":1},
     {"label":"ไส้ปลาหมัก","names":["ไส้ปลาหมัก/ไส้ปลาในปลาร้า"],"emoji":"🥩","category":"meat","count":1},
-    {"label":"ไส้อั่ว","names":["ไส้อั่ว"],"emoji":"🌭","category":"meat","count":1}
+    {"label":"ไส้อั่ว","names":["ไส้อั่ว"],"emoji":"🌭","category":"meat","count":1},
+    {"label":"แครอท","names":["แครอท"],"emoji":"🥕","category":"vegetable","count":0}
 ];

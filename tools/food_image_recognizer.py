@@ -43,6 +43,22 @@ INGREDIENT_MAPPING = {
     "sprouts": "ถั่วงอก",
     "rice": "ข้าว",
     "sugar": "น้ำตาล",
+    "tomato": "มะเขือเทศ",
+    "chili": "พริก",
+    "cabbage": "กะหล่ำปลี",
+    "carrot": "แครอท",
+    "cucumber": "แตงกวา",
+    "onion": "หัวหอม",
+    "pepper": "พริกไทย",
+    "mushroom": "เห็ด",
+    "lemon": "มะนาว",
+    "onion_green": "ต้นหอม",
+    "onion_red": "หอมแดง",
+    "onion_white": "หัวหอมใหญ่",
+    "coriander": "ผักชี",
+    "onion": "หัวหอม",
+    "chili_green": "พริกเขียว",
+    "broccoli": "บรอกโคลี",
 }
 
 

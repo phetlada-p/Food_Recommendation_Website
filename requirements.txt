@@ -1,5 +1,7 @@
 # โมเดลและ notebook (สมาชิกคนที่ 2)
-scikit-learn
+# ไฟล์ dataset/model/tfidf_model.joblib บันทึกด้วย scikit-learn 1.8.0
+# ถ้าใช้เวอร์ชันอื่นแล้วมีคำเตือน ให้รัน:  cd dataset && python recommender.py train
+scikit-learn>=1.8
 joblib
 pandas
 
@@ -8,7 +10,7 @@ flask
 flask-cors
 gunicorn
 
-# AI Food Image Recognition
+# AI ตรวจจับวัตถุดิบจากรูปภาพ (หนัก ถ้าไม่ติดตั้ง เว็บยังใช้งานส่วนอื่นได้ปกติ)
 torch
 torchvision
 timm

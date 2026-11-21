@@ -55,7 +55,7 @@ for _cat, _keys in {
             "pork leg,pork skin,pork spine,pork offal,offal,chicken feet,fermented fish,"
             "fermented fish entrails,fish paste,meat,isan sausage,northern sausage,shrimp paste balls",
     "vegetable": "bean sprouts,morning glory,chives,taro,taro stems,wax gourd,potato,cassava,mixed vegetables,"
-                 "vegetable,pickled mustard greens,senna siamea leaves,green beans,mung beans",
+                 "vegetable,pickled mustard greens,senna siamea leaves,green beans,mung beans,carrot,tomato",
     "fruit": "banana,pineapple,jackfruit,ripe mango,fruit,coconut",
     "dairy": "egg,egg yolk,fried eggs,hard-boiled eggs,butter,soy milk",
     "staple": "rice,glutinous rice,rice flour,glutinous rice flour,flour,rice noodles,noodles,crispy noodles,"
@@ -78,6 +78,7 @@ EMOJI = {
     "pork belly": "🥓", "ground pork": "🥩", "pork blood": "🩸", "blood tofu": "🩸", "pork leg": "🍖",
     "pork offal": "🍖", "offal": "🍖", "chicken feet": "🍗", "fermented fish": "🐟",
     "isan sausage": "🌭", "northern sausage": "🌭", "shrimp paste balls": "🍤",
+    "carrot": "🥕", "tomato": "🍅",
     "bean sprouts": "🌱", "morning glory": "🥬", "taro": "🍠", "cassava": "🍠", "wax gourd": "🥒",
     "potato": "🥔", "mixed vegetables": "🥗", "green beans": "🌱", "mung beans": "🌱",
     "banana": "🍌", "pineapple": "🍍", "jackfruit": "🍈", "ripe mango": "🥭", "coconut": "🥥",
@@ -121,6 +122,18 @@ def main():
                 continue
             lab = label_of(th)
             g = groups.setdefault(lab, {"label": lab, "names": [], "ens": set(), "category": None, "emoji": None})
+            if th not in g["names"]:
+                g["names"].append(th)
+            g["ens"].add(en)
+
+    # เพิ่มวัตถุดิบที่ AI ตรวจจับได้ แม้ยังไม่มีในสูตรอาหาร
+    for en in ("carrot",):
+        for th in en2th.get(en, []):
+            lab = label_of(th)
+            g = groups.setdefault(lab, {
+                "label": lab, "names": [], "ens": set(),
+                "category": None, "emoji": None
+            })
             if th not in g["names"]:
                 g["names"].append(th)
             g["ens"].add(en)

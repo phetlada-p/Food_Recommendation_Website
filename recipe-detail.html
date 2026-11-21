@@ -3,22 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>รายละเอียดเมนู | What's in Your Fridge?</title>
+    <title>รายละเอียดเมนู | Foody</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css" id="css-base-original">
+    <link rel="stylesheet" href="css/foody-original.css" id="css-foody-original">
+    <link rel="stylesheet" href="css/style-slide.css" id="css-base-slide" media="not all">
+    <link rel="stylesheet" href="css/foody.css" id="css-foody-slide" media="not all">
+    <script>
+        // เลือกธีมก่อนแสดงผล (ค่าเริ่มต้น = สไตล์ดั้งเดิม, สลับได้ด้วยปุ่ม 🎨 มุมซ้ายล่าง)
+        (function () {
+            var theme = "original";
+            try { theme = localStorage.getItem("foodyTheme") || "original"; } catch (e) {}
+            var slide = theme === "slide";
+            document.documentElement.setAttribute("data-theme", slide ? "slide" : "original");
+            function set(id, on) { document.getElementById(id).media = on ? "all" : "not all"; }
+            set("css-base-original", !slide); set("css-foody-original", !slide);
+            set("css-base-slide", slide); set("css-foody-slide", slide);
+        })();
+    </script>
 </head>
 
 <body>
 
     <!-- Header -->
     <header>
-        <h1>🍅 What's in Your Fridge?</h1>
+        <h1><a href="index.html" class="brand">🍅 Foody <small>What's in Your Fridge?</small></a></h1>
 
         <nav>
             <a href="index.html">หน้าแรก</a>
+            <a href="menus.html">เมนูแนะนำ</a>
             <a href="ingredients.html">เลือกวัตถุดิบ</a>
         </nav>
     </header>
@@ -34,12 +50,14 @@
     <div id="toast" class="toast" role="status"></div>
 
     <footer>
-        <p>❤️ What's in Your Fridge? | AI Food Recommendation</p>
+        <p>❤️ Foody | What's in Your Fridge? | AI Food Recommendation</p>
     </footer>
 
     <script src="js/recipes-data.js"></script>
+    <script src="js/food-art.js"></script>
     <script src="js/api.js"></script>
     <script src="js/recipe-detail.js"></script>
 
+    <script src="js/theme.js"></script>
 </body>
 </html>

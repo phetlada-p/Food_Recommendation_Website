@@ -198,7 +198,7 @@ function render() {
     detailArea.innerHTML = `
         <div class="detail-hero">
             <div class="detail-thumb">
-                <span class="thumb-emoji big">${esc(courseEmoji(recipe.course))}</span>
+                ${dishImageHtml({ id: recipe.id, name: recipe.name, course: recipe.course, ingTh: recipe.ingredients || [] }, "detail-dish")}
             </div>
 
             <div class="detail-info">

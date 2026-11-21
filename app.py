@@ -7,7 +7,11 @@ import sqlite3
 import json
 from io import BytesIO
 
-from tools.food_image_recognizer import FoodImageRecognizer
+# โมเดลรูปภาพใช้ torch ซึ่งหนัก: ถ้าไม่ได้ติดตั้ง ระบบแนะนำเมนูยังต้องทำงานได้
+try:
+    from tools.food_image_recognizer import FoodImageRecognizer
+except ImportError:
+    FoodImageRecognizer = None
 
 # ========================================
 # 1. กำหนดตำแหน่งโปรเจกต์
@@ -33,18 +37,21 @@ CORS(app)
 # จำกัดขนาดรูปภาพไม่เกิน 8 MB
 app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024
 
-# โหลดโมเดลตรวจจับวัตถุดิบเพียงครั้งเดียว
-print("Loading Food Image Recognition Model...")
-
+# โหลดโมเดลตรวจจับวัตถุดิบเมื่อมีการใช้งานครั้งแรก
 image_recognizer = None
 
-try:
-    image_recognizer = FoodImageRecognizer()
-    print("Food Image Recognition Model loaded successfully!")
+def get_image_recognizer():
+    global image_recognizer
 
-except Exception:
-    app.logger.exception("Cannot load Food Image Recognition Model")
-    print("Image recognition is unavailable.")
+    if image_recognizer is None:
+        if FoodImageRecognizer is None:
+            raise ImportError("torch / timm is not installed")
+
+        print("Loading Food Image Recognition Model...")
+        image_recognizer = FoodImageRecognizer()
+        print("Food Image Recognition Model loaded successfully!")
+
+    return image_recognizer
 
 print("Loading Smart Fridge AI Model...")
 
@@ -116,10 +123,19 @@ def frontend_files(filename):
 def recognize_ingredients():
 
     # ตรวจสอบว่าโมเดลพร้อมใช้งานหรือไม่
-    if image_recognizer is None:
+        # โหลดโมเดลเมื่อมีการเรียกใช้งานครั้งแรก
+    try:
+        recognizer = get_image_recognizer()
+    except ImportError:
         return jsonify({
             "status": "error",
-            "error": "Image recognition model is unavailable"
+            "error": "ระบบตรวจจับวัตถุดิบจากรูปภาพยังไม่พร้อมใช้งาน กรุณาเลือกวัตถุดิบด้วยตัวเอง"
+        }), 503
+    except Exception:
+        app.logger.exception("Cannot load Food Image Recognition Model")
+        return jsonify({
+            "status": "error",
+            "error": "ไม่สามารถโหลดระบบตรวจจับวัตถุดิบได้"
         }), 503
 
     # ตรวจสอบว่ามีไฟล์ภาพหรือไม่
@@ -161,7 +177,7 @@ def recognize_ingredients():
             }), 400
 
         # วิเคราะห์รูปภาพ
-        result = image_recognizer.predict(
+        result = recognizer.predict(
             BytesIO(image_bytes),
             top_k=10
         )
